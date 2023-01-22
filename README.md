@@ -1,6 +1,11 @@
 # AnonChatBot
 Простой спаммер для анонимного чата в Telegram
 
+# Используемые библиотеки
+- [WTelegramClient](https://github.com/wiz0u/WTelegramClient)
+- [2captcha-csharp](https://github.com/2captcha/2captcha-csharp)
+- [ConfigCreator](https://github.com/FanyaOff/Config-Creator)
+
 # Настройка
 **!ЕСЛИ ВЫ ИСПОЛЬЗУЕТЕ РУ НОМЕРА, ТО КОД МОЖЕТ НЕ ПРИХОДИТЬ. РЕКОМЕНДУЕТСЯ ИСПОЛЬЗОВАТЬ ЕУ НОМЕРА!**
 - **Перед настройкой запустите программу, чтобы создался конфиг файл**
