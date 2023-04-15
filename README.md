@@ -1,6 +1,8 @@
 # AnonChatBot
 Простой спаммер для анонимного чата в Telegram
 
+# [Последний релиз](https://github.com/FanyaOff/AnonChatBot/releases/tag/acb)
+
 # Используемые библиотеки
 - [WTelegramClient](https://github.com/wiz0u/WTelegramClient)
 - [2captcha-csharp](https://github.com/2captcha/2captcha-csharp)
