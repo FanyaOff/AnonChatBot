@@ -9,7 +9,7 @@
 - [ConfigCreator](https://github.com/FanyaOff/Config-Creator)
 
 # Настройка
-**!ЕСЛИ ВЫ ИСПОЛЬЗУЕТЕ РУ НОМЕРА, ТО КОД МОЖЕТ НЕ ПРИХОДИТЬ. РЕКОМЕНДУЕТСЯ ИСПОЛЬЗОВАТЬ ЕУ НОМЕРА!**
+
 - **Перед настройкой запустите программу, чтобы создался конфиг файл**
 
 ![image](https://user-images.githubusercontent.com/73064979/212462756-f374db31-b069-4cdd-b4cb-7e3bba51b63e.png)
