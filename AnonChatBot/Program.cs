@@ -7,7 +7,7 @@ using Config = ConfigCreator.Config;
 
 namespace AnonChatBot
 {
-    internal class AnonChatBot 
+    internal class AnonChatBot
     {
         static StreamWriter WTelegramLogs = new StreamWriter("WTelegram.log", true, Encoding.UTF8) { AutoFlush = true };
         private static string fileName;
@@ -25,27 +25,7 @@ namespace AnonChatBot
                 Console.Write(str.Contains("FLOOD", StringComparison.OrdinalIgnoreCase) ? $"\nFLOOD WAIT! {str}" : string.Empty);
                 WTelegramLogs.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{"TDIWE!"[lvl]}] {str}");
             };
-            // creating or init cfg
-            try
-            {
-                Config.Initialize("botConfig", null);
-            }
-            catch
-            {
-                Config.Add("SpammingText", null, "Текст который бот будет писать после триггер фразы");
-                Config.Add("ApiID", null, "Берется тут: my.telegram.org");
-                Config.Add("ApiHash", null, "Берется тут: my.telegram.org");
-                Config.Add("PhoneNumber", "+79996665544", null);
-                Config.Add("AnonChatBot", "AnonRuBot", "Айди анонимного бота, указывать без @");
-                Config.Add("TriggerWord", "Собеседник найден", "Фраза, на которую бот будет срабатывать");
-                Config.Add("AutosolveCaptcha", "false", "true, если вы хотите чтобы капча решалась автоматически. Требуется RuCaptcha api key");
-                Config.Add("RuCaptchaApiKey", "apiKeyHere", "Апи ключ можно взять тут - https://rucaptcha.com/enterpage");
-                Config.CreateConfigFile("botConfig", null);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[CONFIG] Кажется, вы не заполнили конфиг файл. Пожалуйста, заполните его и повторите попытку");
-                Console.ReadKey();
-                return;
-            }
+            InitializeConfig();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("[API] Connecting...");
             client = new Client(TgConfig);
@@ -103,13 +83,38 @@ namespace AnonChatBot
                             var text = Config.GetItem("SpammingText");
                             var anonChat = await client.Contacts_ResolveUsername(Config.GetItem("AnonChatBot"));
                             Thread.Sleep(500);
-                            await client.SendMessageAsync(anonChat, text);
+                            await client.SendMessageAsync(anonChat, StringRandomizator.RandomizateString(text));
                             Thread.Sleep(500);
                             await client.SendMessageAsync(anonChat, "/next");
                         }
                         break;
                 }
         }
+
+        public static void InitializeConfig()
+        {
+            try
+            {
+                Config.Initialize("botConfig", null);
+            }
+            catch
+            {
+                Config.Add("SpammingText", null, "Текст который бот будет писать после триггер фразы");
+                Config.Add("ApiID", null, "Берется тут: my.telegram.org");
+                Config.Add("ApiHash", null, "Берется тут: my.telegram.org");
+                Config.Add("PhoneNumber", "+79996665544", null);
+                Config.Add("AnonChatBot", "AnonRuBot", "Айди анонимного бота, указывать без @");
+                Config.Add("TriggerWord", "Собеседник найден", "Фраза, на которую бот будет срабатывать");
+                Config.Add("AutosolveCaptcha", "false", "true, если вы хотите чтобы капча решалась автоматически. Требуется RuCaptcha api key");
+                Config.Add("RuCaptchaApiKey", "apiKeyHere", "Апи ключ можно взять тут - https://rucaptcha.com/enterpage");
+                Config.CreateConfigFile("botConfig", null);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[CONFIG] Кажется, вы не заполнили конфиг файл. Пожалуйста, заполните его и повторите попытку");
+                Console.ReadKey();
+                return;
+            }
+        }
+
         static string solveCaptcha(string captchaApiKey, string captchaPath)
         {
             var solver = new TwoCaptcha.TwoCaptcha(captchaApiKey);
