@@ -8,6 +8,8 @@
 - [2captcha-csharp](https://github.com/2captcha/2captcha-csharp)
 - [ConfigCreator](https://github.com/FanyaOff/Config-Creator)
 
+# [Демонстрация работы бота](https://www.youtube.com/watch?v=tdgiPBhBsfg)
+
 # Настройка
 
 - **Перед настройкой запустите программу, чтобы создался конфиг файл**
