@@ -1,5 +1,5 @@
-# AnonChatBot
-Простой спаммер для анонимного чата в Telegram
+# Важно!
+Если программа не запускается, и консолька сразу же закрывается, то скачайте [.net sdk](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.311-windows-x64-installer)
 
 # [Последний релиз](https://github.com/FanyaOff/AnonChatBot/releases/tag/random)
 
