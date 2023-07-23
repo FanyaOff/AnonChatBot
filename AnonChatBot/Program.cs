@@ -140,7 +140,7 @@ namespace AnonChatBot
             switch (what)
             {
                 case "api_id": return Config.GetItem("ApiID");
-                case "api_hash": return Config.GetItem("ApiHash");
+                case "api_hash": return Config.GetItem("ApiHash").Replace(" ", "");
                 case "phone_number": return Config.GetItem("PhoneNumber");
                 case "verification_code": Console.Write("Code: "); return Console.ReadLine();
                 case "session_pathname": return $"session/{Config.GetItem("PhoneNumber").Replace(" ", string.Empty)}.session";
