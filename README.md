@@ -1,15 +1,17 @@
-# AnonChatBot
-Простой спаммер для анонимного чата в Telegram
+# Важно!
+Если программа не запускается, и консолька сразу же закрывается, то скачайте [.net sdk](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.311-windows-x64-installer)
 
-# [Последний релиз](https://github.com/FanyaOff/AnonChatBot/releases/tag/acb)
+# [Последний релиз](https://github.com/FanyaOff/AnonChatBot/releases/tag/random)
 
 # Используемые библиотеки
 - [WTelegramClient](https://github.com/wiz0u/WTelegramClient)
 - [2captcha-csharp](https://github.com/2captcha/2captcha-csharp)
 - [ConfigCreator](https://github.com/FanyaOff/Config-Creator)
 
+# [Демонстрация работы бота](https://www.youtube.com/watch?v=tdgiPBhBsfg)
+
 # Настройка
-**!ЕСЛИ ВЫ ИСПОЛЬЗУЕТЕ РУ НОМЕРА, ТО КОД МОЖЕТ НЕ ПРИХОДИТЬ. РЕКОМЕНДУЕТСЯ ИСПОЛЬЗОВАТЬ ЕУ НОМЕРА!**
+
 - **Перед настройкой запустите программу, чтобы создался конфиг файл**
 
 ![image](https://user-images.githubusercontent.com/73064979/212462756-f374db31-b069-4cdd-b4cb-7e3bba51b63e.png)
@@ -41,7 +43,7 @@ false - Выключить авторешение капчи
 Если вы выбрали true, то вам нужен будет "RuCaptchaApiKey"
 
 ## [RuCaptchaApiKey]
-- Для его получения регистрируемся на сайте https://rucaptcha.com/enterpage и пополняем баланс на рублей 30, поверьте, вам этого хватит на 1000 капч
+- Для его получения регистрируемся на сайте https://rucaptcha.com/enterpage и пополняем баланс на рублей 30, поверьте, вам этого хватит на 1000 капч _(или используйте мой ключ - d0ce56dffb65edbfc64ef9896a31c663)_
 
 После пополнения спускаемся чуть ниже и копируем апи ключ 
 
