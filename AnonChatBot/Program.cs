@@ -19,22 +19,60 @@ namespace AnonChatBot
         static void Main() => Initialize().GetAwaiter().GetResult();
         static async Task Initialize()
         {
-            // log into WTelegram.log
-            Helpers.Log = (lvl, str) =>
+            try
             {
-                Console.Write(str.Contains("FLOOD", StringComparison.OrdinalIgnoreCase) ? $"\nFLOOD WAIT! {str}" : string.Empty);
-                WTelegramLogs.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{"TDIWE!"[lvl]}] {str}");
-            };
-            InitializeConfig();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("[API] Connecting...");
-            client = new Client(TgConfig);
-            await client.LoginUserIfNeeded();
-            client.OnUpdate += OnNewMessage;
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"[API] Connected!\n[BOT] Waiting for message from {Config.GetItem("AnonChatBot")}");
-            Console.ForegroundColor = ConsoleColor.White;
-            await Task.Delay(-1);
+                if (!Directory.Exists("session"))
+                    Directory.CreateDirectory("session");
+                // log into WTelegram.log
+                Helpers.Log = (lvl, str) =>
+                {
+                    Console.Write(str.Contains("FLOOD", StringComparison.OrdinalIgnoreCase) ? $"\nFLOOD WAIT! {str}" : string.Empty);
+                    WTelegramLogs.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{"TDIWE!"[lvl]}] {str}");
+                };
+                InitializeConfig(true);
+                checkConfig();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("[API] Connecting...");
+                client = new Client(TgConfig);
+                await client.LoginUserIfNeeded();
+                client.OnUpdate += OnNewMessage;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"[API] Connected!\n[BOT] Waiting for message from {Config.GetItem("AnonChatBot")}");
+                Console.ForegroundColor = ConsoleColor.White;
+                await Task.Delay(-1);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor= ConsoleColor.Red;
+                Console.WriteLine("Проверьте свой конфиг файл. Кажется, вы не заполнили пункт ApiHash или же не написали SpammingText в 1 строку!");
+                Console.WriteLine($"Ошибка: {ex}\n\nЕсли вы не можете пофиксить ошибку, отправьте скрин исключения разработчику");
+                Console.ReadKey();
+            }
+        }
+
+        private static void checkConfig()
+        {
+            int nullValues = 0;
+            Console.WriteLine("[ConfigValidator] Checking botConfig.ini");
+            if (Config.GetItem("SpammingText") == null) { Console.WriteLine("[ConfigValidator] SpammingText is null"); nullValues++; }
+            if (Config.GetItem("ApiID") == null) { Console.WriteLine("[ConfigValidator] ApiID is null"); nullValues++; }
+            if (Config.GetItem("ApiHash") == null) { Console.WriteLine("[ConfigValidator] ApiHash is null"); nullValues++; }
+            if (Config.GetItem("PhoneNumber") == null) { Console.WriteLine("[ConfigValidator] PhoneNumber is null"); nullValues++; }
+            if (Config.GetItem("AnonChatBot") == null) { Console.WriteLine("[ConfigValidator] AnonChatBot is null"); nullValues++; }
+            if (Config.GetItem("TriggerWord") == null) { Console.WriteLine("[ConfigValidator] TriggerWord is null"); nullValues++; }
+            if (Config.GetItem("AutosolveCaptcha") == null) { Console.WriteLine("[ConfigValidator] AutosolveCaptcha is null"); nullValues++; }
+            if (Config.GetItem("RuCaptchaApiKey") == null) { Console.WriteLine("[ConfigValidator] RuCaptchaApiKey is null"); nullValues++; }
+            if (Config.GetItem("SpammingTextDelay") == null) { Console.WriteLine("[ConfigValidator] SpammingTextDelay is null"); nullValues++; }
+            if (Config.GetItem("NextCommandDelay") == null) { Console.WriteLine("[ConfigValidator] NextCommandDelay is null"); nullValues++; }
+            if (nullValues > 1)
+            {
+                Console.WriteLine($"[ConfigValidator] Количество пунктов не прошедших проверку: {nullValues}, пересоздаю конфиг файл");
+                File.Delete("botConfig.ini");
+                InitializeConfig(false);
+                Console.WriteLine("[ConfigValidator] Конфиг был пересоздан, заполните его заного НЕ пропуская никаких значений!");
+                Console.ReadKey();
+                return;
+            }
         }
 
         private static async Task OnNewMessage(IObject arg)
@@ -82,16 +120,16 @@ namespace AnonChatBot
                             Console.ForegroundColor = ConsoleColor.White;
                             var text = Config.GetItem("SpammingText");
                             var anonChat = await client.Contacts_ResolveUsername(Config.GetItem("AnonChatBot"));
-                            Thread.Sleep(500);
+                            Thread.Sleep(Convert.ToInt32(Config.GetItem("SpammingTextDelay")));
                             await client.SendMessageAsync(anonChat, StringRandomizator.RandomizateString(text));
-                            Thread.Sleep(500);
+                            Thread.Sleep(Convert.ToInt32(Config.GetItem("NextCommandDelay")));
                             await client.SendMessageAsync(anonChat, "/next");
                         }
                         break;
                 }
         }
 
-        public static void InitializeConfig()
+        public static void InitializeConfig(bool isFirstCreated)
         {
             try
             {
@@ -99,18 +137,24 @@ namespace AnonChatBot
             }
             catch
             {
-                Config.Add("SpammingText", null, "Текст который бот будет писать после триггер фразы");
-                Config.Add("ApiID", null, "Берется тут: my.telegram.org");
-                Config.Add("ApiHash", null, "Берется тут: my.telegram.org");
+                Config.Add("SpammingText", "spamTextHere", "Текст который бот будет писать после триггер фразы");
+                Config.Add("ApiID", "apiIdHere", "Берется тут: my.telegram.org");
+                Config.Add("ApiHash", "apiHashHere", "Берется тут: my.telegram.org");
                 Config.Add("PhoneNumber", "+79996665544", null);
                 Config.Add("AnonChatBot", "AnonRuBot", "Айди анонимного бота, указывать без @");
                 Config.Add("TriggerWord", "Собеседник найден", "Фраза, на которую бот будет срабатывать");
                 Config.Add("AutosolveCaptcha", "false", "true, если вы хотите чтобы капча решалась автоматически. Требуется RuCaptcha api key");
                 Config.Add("RuCaptchaApiKey", "apiKeyHere", "Апи ключ можно взять тут - https://rucaptcha.com/enterpage");
+                Config.Add("SpammingTextDelay", "500", "Задержка отправления текста после триггер фразы");
+                Config.Add("NextCommandDelay", "500", "Задержка отправления команды /next после отправления текста");
                 Config.CreateConfigFile("botConfig", null);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[CONFIG] Кажется, вы не заполнили конфиг файл. Пожалуйста, заполните его и повторите попытку");
-                Console.ReadKey();
+                if (isFirstCreated)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[CONFIG] Кажется, вы не заполнили конфиг файл. Пожалуйста, заполните его и повторите попытку");
+                    Console.ReadKey();
+                    return;
+                }
                 return;
             }
         }
