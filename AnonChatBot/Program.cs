@@ -31,6 +31,7 @@ namespace AnonChatBot
                 };
                 InitializeConfig(true);
                 checkConfig();
+                Console.WriteLine(Config.GetItem("SpammingText"));
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("[API] Connecting...");
                 client = new Client(TgConfig);
@@ -62,7 +63,7 @@ namespace AnonChatBot
             if (Config.GetItem("TriggerWord") == null) { Console.WriteLine("[ConfigValidator] TriggerWord is null"); nullValues++; }
             if (Config.GetItem("AutosolveCaptcha") == null) { Console.WriteLine("[ConfigValidator] AutosolveCaptcha is null"); nullValues++; }
             if (Config.GetItem("RuCaptchaApiKey") == null) { Console.WriteLine("[ConfigValidator] RuCaptchaApiKey is null"); nullValues++; }
-            if (Config.GetItem("SpammingTextDelay") == null) { Console.WriteLine("[ConfigValidator] SpammingTextDelay is null"); nullValues++; }
+            if (Config.GetItem("TextDelay") == null) { Console.WriteLine("[ConfigValidator] TextDelay is null"); nullValues++; }
             if (Config.GetItem("NextCommandDelay") == null) { Console.WriteLine("[ConfigValidator] NextCommandDelay is null"); nullValues++; }
             if (nullValues > 1)
             {
@@ -120,7 +121,7 @@ namespace AnonChatBot
                             Console.ForegroundColor = ConsoleColor.White;
                             var text = Config.GetItem("SpammingText");
                             var anonChat = await client.Contacts_ResolveUsername(Config.GetItem("AnonChatBot"));
-                            Thread.Sleep(Convert.ToInt32(Config.GetItem("SpammingTextDelay")));
+                            Thread.Sleep(Convert.ToInt32(Config.GetItem("TextDelay")));
                             await client.SendMessageAsync(anonChat, StringRandomizator.RandomizateString(text));
                             Thread.Sleep(Convert.ToInt32(Config.GetItem("NextCommandDelay")));
                             await client.SendMessageAsync(anonChat, "/next");
@@ -145,7 +146,7 @@ namespace AnonChatBot
                 Config.Add("TriggerWord", "Собеседник найден", "Фраза, на которую бот будет срабатывать");
                 Config.Add("AutosolveCaptcha", "false", "true, если вы хотите чтобы капча решалась автоматически. Требуется RuCaptcha api key");
                 Config.Add("RuCaptchaApiKey", "apiKeyHere", "Апи ключ можно взять тут - https://rucaptcha.com/enterpage");
-                Config.Add("SpammingTextDelay", "500", "Задержка отправления текста после триггер фразы");
+                Config.Add("TextDelay", "500", "Задержка отправления текста после триггер фразы");
                 Config.Add("NextCommandDelay", "500", "Задержка отправления команды /next после отправления текста");
                 Config.CreateConfigFile("botConfig", null);
                 if (isFirstCreated)
