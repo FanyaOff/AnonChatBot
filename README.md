@@ -7,6 +7,7 @@
 - [WTelegramClient](https://github.com/wiz0u/WTelegramClient)
 - [2captcha-csharp](https://github.com/2captcha/2captcha-csharp)
 - [ConfigCreator](https://github.com/FanyaOff/Config-Creator)
+- [Colorful.Console](https://github.com/tomakita/Colorful.Console)
 
 # [Демонстрация работы бота](https://www.youtube.com/watch?v=tdgiPBhBsfg)
 
@@ -49,6 +50,21 @@ false - Выключить авторешение капчи
 После пополнения спускаемся чуть ниже и копируем апи ключ 
 
 ![image](https://user-images.githubusercontent.com/73064979/212463224-29376ed1-7f27-471d-bc7b-afe660037626.png)
+
+## [TextDelay]
+- Задержка отправления текста после триггер фразы
+
+## [NextCommandDelay]
+- Задержка отправления команды /next после отправления текста
+
+## [BypassMode]
+- Эксперементальный режим работы бота, при котором он спамит заданное вами количество сообщений и потом уходит на перерыв на заданное вами количество милисекунд
+
+## [BypassMessageCount]
+- Количество отправленных сообщений перед остановкой
+
+## [BypassCooldown]
+- Задержка между отправленными сообщениями (в милисекундах)
 
 С настройкой завершили, теперь переходим к использованию
 
