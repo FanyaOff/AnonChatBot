@@ -1,6 +1,8 @@
 # Важно!
 Если программа не запускается, и консолька сразу же закрывается, то скачайте [.net sdk](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.311-windows-x64-installer)
 
+# Если вы хотите поддержать автора программы, то это можно сделать [кликнув на этот текст ❤](https://www.donationalerts.com/r/fanyaoff)
+
 # [Последний релиз](https://github.com/FanyaOff/AnonChatBot/releases/tag/random)
 
 # Используемые библиотеки
