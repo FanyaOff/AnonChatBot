@@ -157,6 +157,7 @@ namespace AnonChatBot
                                 if (msgCount == Convert.ToInt32(Config.GetItem("BypassMessageCount")))
                                 {
                                     await client.SendMessageAsync(anonChat, "/stop");
+                                    msgCount = 0;
                                     Console.WriteLine($"[Bypass] Stop spamming. Delay: {Config.GetItem("BypassCooldown")}", Color.AntiqueWhite);
                                     Thread.Sleep(Convert.ToInt32(Config.GetItem("BypassCooldown")));
                                     await client.SendMessageAsync(anonChat, "/start");
